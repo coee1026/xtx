@@ -7,6 +7,7 @@ import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
 import { loginPasApi, loginCodeApi, getCodeApi } from '@/apis/login'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/login'
 const isAccount = ref(true)
 const isPhone = ref(false)
 const checked = ref(true)
@@ -38,12 +39,12 @@ const rulesCode = {
     { pattern: /^\d{6}$/, message: '验证码应为6位数字', trigger: 'blur' }
   ]
 }
+const userStore = useUserStore()
 const pasRef = ref()
 const codeRef = ref()
 const router = useRouter()
 // 账号heima293 密码hm#qd@23! 手机12056258293
 const login = async () => {
-  // await form.value.validate()
   if (!isPhone.value) {
     await pasRef.value.validate()
     if (!checked.value) {
@@ -51,19 +52,18 @@ const login = async () => {
       return
     }
     // 发请求
-    await loginPasApi(formPassword.value)
-    // console.log(res.data)
+    const res = await loginPasApi(formPassword.value)
+    await userStore.setInfo(res.data.result)
     ElMessage.success('登陆成功')
   } else {
     await codeRef.value.validate()
     if (!checked.value) {
-      console.log(111)
       ElMessage.warning('请先阅读并同意《服务条款》和《服务条款》')
       return
     }
     // 发请求
-    await loginCodeApi(formCode.value)
-
+    const res = await loginCodeApi(formCode.value)
+    await userStore.setInfo(res.data.result)
     ElMessage.success('登陆成功')
   }
   router.push('/')
@@ -72,8 +72,7 @@ const timeStr = ref('获取验证码')
 const time = ref(60)
 const flag = ref(false)
 const getCode = async () => {
-  const res = await getCodeApi(formCode.value.mobile)
-  console.log(res.data)
+  await getCodeApi(formCode.value.mobile)
   if (flag.value) {
     return
   }

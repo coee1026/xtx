@@ -10,7 +10,7 @@ defineProps({
 </script>
 <template>
   <div class="goods">
-    <div class="img"><img :src="pic" alt="" /></div>
+    <div class="img"><img v-img-lazy="pic" alt="" /></div>
     <div class="txt">
       <h3 v-show="name">{{ name }}</h3>
       <h3 v-show="title">{{ title }}</h3>

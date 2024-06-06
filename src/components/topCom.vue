@@ -1,14 +1,39 @@
+<script setup>
+import { useUserStore } from '@/stores/login'
+const userStore = useUserStore()
+const exit = () => {
+  userStore.setInfo({
+    account: '',
+    mobile: '',
+    token: '',
+    avatar: '',
+    gender: '',
+    birthday: '',
+    cityCode: '',
+    provinceCode: '',
+    profession: ''
+  })
+}
+</script>
 <template>
   <div class="top">
-    <ul>
-      <li><RouterLink to="/login" />请先登录</li>
-      <li><RouterLink to="/register" />免费注册</li>
-      <li><RouterLink to="/home" />我的订单</li>
-      <li><RouterLink to="/home" />会员中心</li>
-      <li><RouterLink to="/home" />帮助中心</li>
-      <li><RouterLink to="/home" />联系我</li>
-      <li><RouterLink to="/home" />关注我</li>
-      <li><a href="https://github.com/coee1026">我的博客</a></li>
+    <ul v-if="!userStore.userInfo.token">
+      <li><a href="/login">请先登录 </a></li>
+
+      <li><a href="/register">免费注册</a></li>
+
+      <li><a href="https://github.com/coee1026">GitHub</a></li>
+    </ul>
+    <ul v-else>
+      <li>
+        <a href="/user">{{ userStore.userInfo.account }} </a>
+      </li>
+      <li>
+        <a href="/login" @click="exit">退出登录</a>
+      </li>
+      <li><a href="/home">我的订单</a></li>
+      <li><a href="/home">会员中心</a></li>
+      <li><a href="/home">帮助中心</a></li>
     </ul>
   </div>
 </template>
@@ -24,15 +49,19 @@
     justify-content: end;
     li {
       margin: 10px 0;
-      color: #fff;
       font-size: 13px;
       padding: 0 18px;
+      color: #fff;
+
       border-left: #999 solid 1px;
       &:nth-child(1) {
         border: 0;
       }
       &:hover {
         color: #27ba9b;
+      }
+      a {
+        color: #fff;
       }
     }
   }

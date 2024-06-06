@@ -33,7 +33,9 @@ const onCate = (id) => {
           @click="onCate(item.id)"
         >
           <a href="#">
-            <div class="img"><img :src="item.picture" alt="" /></div>
+            <div class="img">
+              <img v-img-lazy="item.picture" alt="" />
+            </div>
             <h4>
               {{ item.name }}
             </h4>
