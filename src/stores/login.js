@@ -1,6 +1,5 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-// import { loginPasApi } from '@/apis/login'
 export const useUserStore = defineStore(
   'xtx-user',
   () => {

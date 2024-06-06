@@ -37,7 +37,18 @@ const router = createRouter({
         },
         {
           path: '/user',
-          component: () => import('@/views/user/index.vue')
+          component: () => import('@/views/user/index.vue'),
+          redirect: '/user/message',
+          children: [
+            {
+              path: 'message',
+              component: () => import('@/views/user/userMes.vue')
+            },
+            {
+              path: 'userorder',
+              component: () => import('@/views/user/userOrder.vue')
+            }
+          ]
         }
       ]
     },

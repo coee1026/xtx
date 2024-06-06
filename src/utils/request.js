@@ -5,7 +5,7 @@ const userStore = useUserStore()
 // 创建axios实例
 const instance = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
-  timeout: 10000,
+  timeout: 100000,
   headers: { 'X-Custom-Header': 'foobar' }
 })
 
